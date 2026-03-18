@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="MailApp">
+
+  <!-- ============================================================
+       IDENTITY
+       Change Id to a fresh GUID (e.g. uuidgen in terminal)
+       Change all YOUR_DOMAIN placeholders to your actual domain
+  ============================================================ -->
+  <Id>11111111-2222-3333-4444-555555555555</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Your Company</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Auto Signature"/>
+  <Description DefaultValue="Automatically injects a remote HTML signature on compose."/>
+  <IconUrl DefaultValue="https://YOUR_DOMAIN/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://YOUR_DOMAIN/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://YOUR_DOMAIN"/>
+
+  <!-- Minimum Outlook requirement for event-based activation -->
+  <Requirements>
+    <Sets DefaultMinVersion="1.3">
+      <Set Name="Mailbox" MinVersion="1.3"/>
+    </Sets>
+  </Requirements>
+
+  <!-- Required boilerplate for mail apps — not actually used in event-only mode -->
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://YOUR_DOMAIN/commands.html"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <!-- No read/compose permissions needed beyond item body -->
+  <Permissions>ReadWriteItem</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+  </Rule>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <!-- ============================================================
+       VERSION OVERRIDES — this is where event-based activation lives
+  ============================================================ -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.3">
+          <bt:Set Name="Mailbox" MinVersion="1.3"/>
+        </bt:Sets>
+      </Requirements>
+
+      <Hosts>
+        <Host xsi:type="MailHost">
+
+          <DesktopFormFactor>
+
+            <!-- The runtime that executes commands.js in the background -->
+            <FunctionFile resid="Commands.Url"/>
+
+            <!-- ============================================================
+                 EVENT-BASED ACTIVATION
+                 OnNewMessageCompose fires when a new compose window opens.
+                 OnNewAppointmentOrganizer fires for calendar invites too —
+                 remove it if you only care about email.
+            ============================================================ -->
+            <ExtensionPoint xsi:type="LaunchEvent">
+              <LaunchEvents>
+                <LaunchEvent Type="OnNewMessageCompose" FunctionName="onNewMessageCompose"/>
+                <!-- Uncomment to also handle calendar invites:
+                <LaunchEvent Type="OnNewAppointmentOrganizer" FunctionName="onNewMessageCompose"/>
+                -->
+              </LaunchEvents>
+              <SourceLocation resid="Commands.Url"/>
+            </ExtensionPoint>
+
+          </DesktopFormFactor>
+        </Host>
+      </Hosts>
+
+      <Resources>
+        <bt:Urls>
+          <!-- ============================================================
+               Point this at wherever you host commands.js
+               Must be HTTPS. Use ngrok for local dev.
+          ============================================================ -->
+          <bt:Url id="Commands.Url" DefaultValue="https://YOUR_DOMAIN/commands.js"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="AddInName" DefaultValue="Auto Signature"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="AddInDescription" DefaultValue="Automatically injects a remote HTML signature on compose."/>
+        </bt:LongStrings>
+      </Resources>
+
+    </VersionOverrides>
+  </VersionOverrides>
+
+</OfficeApp>
