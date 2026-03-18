@@ -1,5 +1,5 @@
 // commands.js
-// Hosted remotely at https://YOUR_DOMAIN/commands.js
+// Hosted remotely at https://your-domain.pages.dev/commands.js
 // Outlook loads this silently — no UI, no task pane.
 //
 // HOW IT WORKS:
@@ -21,7 +21,7 @@ Office.onReady();
 // ============================================================
 
 // URL of your flat HTML signature file
-const SIGNATURE_URL = “https://YOUR_DOMAIN/signature.html”;
+const SIGNATURE_URL = “https://your-domain.pages.dev/signature.html”;
 
 // Name shown in Outlook’s signature picker (cosmetic only)
 const SIGNATURE_NAME = “Company Signature”;

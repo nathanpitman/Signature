@@ -13,13 +13,13 @@
   ============================================================ -->
   <Id>D52462A3-A16D-4B1D-AED0-BB3D66DEAC88</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>Your Company</ProviderName>
+  <ProviderName>Test</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Auto Signature"/>
   <Description DefaultValue="Automatically injects a remote HTML signature on compose."/>
-  <IconUrl DefaultValue="https://YOUR_DOMAIN/assets/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://YOUR_DOMAIN/assets/icon-128.png"/>
-  <SupportUrl DefaultValue="https://YOUR_DOMAIN"/>
+  <IconUrl DefaultValue="https://your-domain.pages.dev/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://your-domain.pages.dev/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://your-domain.pages.dev"/>
 
   <!-- Minimum Outlook requirement for event-based activation -->
   <Requirements>
@@ -32,7 +32,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://YOUR_DOMAIN/commands.html"/>
+        <SourceLocation DefaultValue="https://your-domain.pages.dev/commands.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -91,7 +91,7 @@
                Point this at wherever you host commands.js
                Must be HTTPS. Use ngrok for local dev.
           ============================================================ -->
-          <bt:Url id="Commands.Url" DefaultValue="https://YOUR_DOMAIN/commands.js"/>
+          <bt:Url id="Commands.Url" DefaultValue="https://your-domain.pages.dev/commands.js"/>
         </bt:Urls>
         <bt:ShortStrings>
           <bt:String id="AddInName" DefaultValue="Auto Signature"/>
