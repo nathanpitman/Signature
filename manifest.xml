@@ -11,7 +11,7 @@
        Change Id to a fresh GUID (e.g. uuidgen in terminal)
        Change all YOUR_DOMAIN placeholders to your actual domain
   ============================================================ -->
-  <Id>11111111-2222-3333-4444-555555555555</Id>
+  <Id>D52462A3-A16D-4B1D-AED0-BB3D66DEAC88</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Your Company</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
