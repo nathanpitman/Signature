@@ -1,0 +1,5 @@
+/commands.js
+  Access-Control-Allow-Origin: *
+
+/signature.html
+  Access-Control-Allow-Origin: *
