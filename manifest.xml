@@ -7,7 +7,7 @@
   xsi:type="MailApp">
 
   <Id>D52462A3-A16D-4B1D-AED0-BB3D66DEAC88</Id>
-  <Version>1.0.0.1</Version>
+  <Version>1.0.0.2</Version>
   <ProviderName>Test</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Auto Signature"/>
@@ -25,7 +25,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://your-domain.pages.dev/commands.html"/>
+        <SourceLocation DefaultValue="https://your-domain.pages.dev/commands"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -68,7 +68,7 @@
       <Resources>
         <bt:Urls>
           <!-- HTML page that loads commands.js via a <script> tag -->
-          <bt:Url id="Commands.Html" DefaultValue="https://your-domain.pages.dev/commands.html"/>
+          <bt:Url id="Commands.Html" DefaultValue="https://your-domain.pages.dev/commands"/>
           <!-- JS file referenced directly for event-based activation -->
           <bt:Url id="Commands.Js" DefaultValue="https://your-domain.pages.dev/commands.js"/>
         </bt:Urls>
