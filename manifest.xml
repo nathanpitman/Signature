@@ -7,7 +7,7 @@
   xsi:type="MailApp">
 
   <Id>D52462A3-A16D-4B1D-AED0-BB3D66DEAC88</Id>
-  <Version>1.0.0.2</Version>
+  <Version>1.0.0.3</Version>
   <ProviderName>Test</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Auto Signature"/>
@@ -16,12 +16,14 @@
   <HighResolutionIconUrl DefaultValue="https://your-domain.pages.dev/assets/icon-128.png"/>
   <SupportUrl DefaultValue="https://your-domain.pages.dev"/>
 
+  <!-- Minimum Outlook requirement for event-based activation -->
   <Requirements>
     <Sets DefaultMinVersion="1.3">
       <Set Name="Mailbox" MinVersion="1.3"/>
     </Sets>
   </Requirements>
 
+  <!-- Required boilerplate for mail apps — not actually used in event-only mode -->
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
@@ -31,12 +33,16 @@
     </Form>
   </FormSettings>
 
+  <!-- No read/compose permissions needed beyond item body -->
   <Permissions>ReadWriteItem</Permissions>
   <Rule xsi:type="RuleCollection" Mode="Or">
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
   </Rule>
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
+  <!-- ============================================================
+       VERSION OVERRIDES — this is where event-based activation lives
+  ============================================================ -->
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
     <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
 
@@ -48,17 +54,29 @@
 
       <Hosts>
         <Host xsi:type="MailHost">
+
           <DesktopFormFactor>
 
-            <!-- FunctionFile must point to an HTML page that loads commands.js -->
-            <FunctionFile resid="Commands.Html"/>
+            <!-- FunctionFile must point to an HTML page that loads commands.js.
+                 resid IDs use plain camelCase — dots in IDs can cause "resid invalid" errors
+                 in some Outlook versions. -->
+            <FunctionFile resid="functionFile"/>
 
+            <!-- ============================================================
+                 EVENT-BASED ACTIVATION
+                 OnNewMessageCompose fires when a new compose window opens.
+                 OnNewAppointmentOrganizer fires for calendar invites too —
+                 remove it if you only care about email.
+            ============================================================ -->
             <ExtensionPoint xsi:type="LaunchEvent">
               <LaunchEvents>
-                <!-- SourceLocation for event-based activation points to the JS file directly -->
                 <LaunchEvent Type="OnNewMessageCompose" FunctionName="onNewMessageCompose"/>
+                <!-- Uncomment to also handle calendar invites:
+                <LaunchEvent Type="OnNewAppointmentOrganizer" FunctionName="onNewMessageCompose"/>
+                -->
               </LaunchEvents>
-              <SourceLocation resid="Commands.Js"/>
+              <!-- SourceLocation for event-based activation points to the JS file directly -->
+              <SourceLocation resid="commandsJs"/>
             </ExtensionPoint>
 
           </DesktopFormFactor>
@@ -67,16 +85,17 @@
 
       <Resources>
         <bt:Urls>
-          <!-- HTML page that loads commands.js via a <script> tag -->
-          <bt:Url id="Commands.Html" DefaultValue="https://your-domain.pages.dev/commands"/>
+          <!-- HTML page that loads commands.js via a <script> tag.
+               Cloudflare Pages serves this at /commands (extensionless) due to Pretty URLs. -->
+          <bt:Url id="functionFile" DefaultValue="https://your-domain.pages.dev/commands"/>
           <!-- JS file referenced directly for event-based activation -->
-          <bt:Url id="Commands.Js" DefaultValue="https://your-domain.pages.dev/commands.js"/>
+          <bt:Url id="commandsJs" DefaultValue="https://your-domain.pages.dev/commands.js"/>
         </bt:Urls>
         <bt:ShortStrings>
-          <bt:String id="AddInName" DefaultValue="Auto Signature"/>
+          <bt:String id="addInName" DefaultValue="Auto Signature"/>
         </bt:ShortStrings>
         <bt:LongStrings>
-          <bt:String id="AddInDescription" DefaultValue="Automatically injects a remote HTML signature on compose."/>
+          <bt:String id="addInDescription" DefaultValue="Automatically injects a remote HTML signature on compose."/>
         </bt:LongStrings>
       </Resources>
 
