@@ -7,7 +7,7 @@
   xsi:type="MailApp">
 
   <Id>D52462A3-A16D-4B1D-AED0-BB3D66DEAC88</Id>
-  <Version>1.0.0.4</Version>
+  <Version>1.0.0.5</Version>
   <ProviderName>Test</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Auto Signature"/>
@@ -54,12 +54,22 @@
 
       <Hosts>
         <Host xsi:type="MailHost">
+
+          <!-- ============================================================
+               RUNTIMES — required for event-based activation.
+               Outlook on the web uses the HTML page (webViewRuntime).
+               Outlook desktop uses the JS file directly (jsRuntime).
+          ============================================================ -->
+          <Runtimes>
+            <Runtime resid="webViewRuntime">
+              <Override type="javascript" resid="jsRuntime"/>
+            </Runtime>
+          </Runtimes>
+
           <DesktopFormFactor>
 
             <!-- ============================================================
                  EVENT-BASED ACTIVATION
-                 FunctionFile is NOT used for LaunchEvent — removed.
-                 SourceLocation points directly to the JS file.
                  OnNewMessageCompose fires when a new compose window opens.
                  OnNewAppointmentOrganizer fires for calendar invites too —
                  remove it if you only care about email.
@@ -71,9 +81,8 @@
                 <LaunchEvent Type="OnNewAppointmentOrganizer" FunctionName="onNewMessageCompose"/>
                 -->
               </LaunchEvents>
-              <!-- SourceLocation points to the JS file directly for event-based activation.
-                   Cloudflare Pretty URLs serves commands.html at /commands (extensionless). -->
-              <SourceLocation resid="commandsJs"/>
+              <!-- SourceLocation identifies the runtime for this extension point -->
+              <SourceLocation resid="webViewRuntime"/>
             </ExtensionPoint>
 
           </DesktopFormFactor>
@@ -82,8 +91,11 @@
 
       <Resources>
         <bt:Urls>
-          <!-- JS file executed directly by Outlook for event-based activation -->
-          <bt:Url id="commandsJs" DefaultValue="https://your-domain.pages.dev/commands.js"/>
+          <!-- HTML page that loads commands.js — used by Outlook on the web.
+               Cloudflare Pages serves commands.html at /commands (extensionless). -->
+          <bt:Url id="webViewRuntime" DefaultValue="https://your-domain.pages.dev/commands"/>
+          <!-- JS file executed directly by Outlook desktop -->
+          <bt:Url id="jsRuntime" DefaultValue="https://your-domain.pages.dev/commands.js"/>
         </bt:Urls>
         <bt:ShortStrings>
           <bt:String id="addInName" DefaultValue="Auto Signature"/>
