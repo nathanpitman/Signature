@@ -21,10 +21,10 @@ Office.onReady();
 // ============================================================
 
 // URL of your flat HTML signature file
-const SIGNATURE_URL = “https://your-domain.pages.dev/signature.html”;
+const SIGNATURE_URL = "https://your-domain.pages.dev/signature.html";
 
-// Name shown in Outlook’s signature picker (cosmetic only)
-const SIGNATURE_NAME = “Company Signature”;
+// Name shown in Outlook's signature picker (cosmetic only)
+const SIGNATURE_NAME = "Company Signature";
 
 // ============================================================
 // EVENT HANDLER
@@ -35,8 +35,8 @@ try {
 const signatureHtml = await fetchSignature(SIGNATURE_URL);
 await setSignature(signatureHtml);
 } catch (err) {
-// Fail silently in production — don’t block compose
-console.error(“Auto Signature: failed to inject signature.”, err);
+// Fail silently in production — don't block compose
+console.error("Auto Signature: failed to inject signature.", err);
 } finally {
 // Always call completed() or Outlook will hang
 event.completed();
@@ -65,10 +65,10 @@ event.completed();
 
 - Injects the signature HTML into the current compose item.
 - 
-- setSignatureAsync is the “proper” signature API — it respects the user’s
-- existing Outlook signature settings (won’t overwrite if they have one set).
+- setSignatureAsync is the "proper" signature API — it respects the user's
+- existing Outlook signature settings (won't overwrite if they have one set).
 - 
-- Falls back to body.setAsync() if setSignatureAsync isn’t available,
+- Falls back to body.setAsync() if setSignatureAsync isn't available,
 - which works on older Outlook versions but replaces the whole body.
   */
   function setSignature(html) {
@@ -88,7 +88,7 @@ event.completed();
   resolve();
   } else {
   // Fallback: user may have a native signature configured,
-  // or API isn’t supported — try body.setAsync instead
+  // or API isn't supported — try body.setAsync instead
   setBodyFallback(item, html, resolve, reject);
   }
   }
@@ -103,17 +103,17 @@ event.completed();
 /**
 
 - Fallback: append signature to the body instead of using the signature API.
-- Less “proper” but works on older Outlook versions.
+- Less "proper" but works on older Outlook versions.
 - Appends rather than replaces so existing body content is preserved.
   */
   function setBodyFallback(item, signatureHtml, resolve, reject) {
   item.body.getAsync(Office.CoercionType.Html, (result) => {
   if (result.status !== Office.AsyncResultStatus.Succeeded) {
-  reject(new Error(“Could not read email body for fallback.”));
+  reject(new Error("Could not read email body for fallback."));
   return;
   }
   
-  const existingBody = result.value || “”;
+  const existingBody = result.value || "";
   const newBody = existingBody + signatureHtml;
   
   item.body.setAsync(
@@ -123,7 +123,7 @@ event.completed();
   if (setResult.status === Office.AsyncResultStatus.Succeeded) {
   resolve();
   } else {
-  reject(new Error(“body.setAsync failed: “ + setResult.error.message));
+  reject(new Error("body.setAsync failed: " + setResult.error.message));
   }
   }
   );
@@ -134,4 +134,4 @@ event.completed();
 // REGISTER — Outlook looks for this on the global scope
 // ============================================================
 
-Office.actions.associate(“onNewMessageCompose”, onNewMessageCompose);
+Office.actions.associate("onNewMessageCompose", onNewMessageCompose);
