@@ -7,7 +7,7 @@
   xsi:type="MailApp">
 
   <Id>D52462A3-A16D-4B1D-AED0-BB3D66DEAC88</Id>
-  <Version>1.0.0.3</Version>
+  <Version>1.0.0.4</Version>
   <ProviderName>Test</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Auto Signature"/>
@@ -54,16 +54,12 @@
 
       <Hosts>
         <Host xsi:type="MailHost">
-
           <DesktopFormFactor>
-
-            <!-- FunctionFile must point to an HTML page that loads commands.js.
-                 resid IDs use plain camelCase — dots in IDs can cause "resid invalid" errors
-                 in some Outlook versions. -->
-            <FunctionFile resid="functionFile"/>
 
             <!-- ============================================================
                  EVENT-BASED ACTIVATION
+                 FunctionFile is NOT used for LaunchEvent — removed.
+                 SourceLocation points directly to the JS file.
                  OnNewMessageCompose fires when a new compose window opens.
                  OnNewAppointmentOrganizer fires for calendar invites too —
                  remove it if you only care about email.
@@ -75,7 +71,8 @@
                 <LaunchEvent Type="OnNewAppointmentOrganizer" FunctionName="onNewMessageCompose"/>
                 -->
               </LaunchEvents>
-              <!-- SourceLocation for event-based activation points to the JS file directly -->
+              <!-- SourceLocation points to the JS file directly for event-based activation.
+                   Cloudflare Pretty URLs serves commands.html at /commands (extensionless). -->
               <SourceLocation resid="commandsJs"/>
             </ExtensionPoint>
 
@@ -85,10 +82,7 @@
 
       <Resources>
         <bt:Urls>
-          <!-- HTML page that loads commands.js via a <script> tag.
-               Cloudflare Pages serves this at /commands (extensionless) due to Pretty URLs. -->
-          <bt:Url id="functionFile" DefaultValue="https://your-domain.pages.dev/commands"/>
-          <!-- JS file referenced directly for event-based activation -->
+          <!-- JS file executed directly by Outlook for event-based activation -->
           <bt:Url id="commandsJs" DefaultValue="https://your-domain.pages.dev/commands.js"/>
         </bt:Urls>
         <bt:ShortStrings>
