@@ -21,7 +21,7 @@ Office.onReady();
 // ============================================================
 
 // URL of your flat HTML signature file
-const SIGNATURE_URL = "https://your-domain.pages.dev/signature.html";
+const SIGNATURE_URL = "https://your-domain.pages.dev/signature";
 
 // Name shown in Outlook's signature picker (cosmetic only)
 const SIGNATURE_NAME = "Company Signature";
