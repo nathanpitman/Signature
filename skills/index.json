@@ -1,0 +1,27 @@
+[
+  {
+    "name": "extending-auto-signature",
+    "path": "architecture/SKILL.md",
+    "description": "Ideas for extending the POC — per-user signatures, templating, caching, a minimal data model",
+    "triggers": [
+      "architecture", "per-user", "template", "CDN", "caching",
+      "data model", "extend", "multi-user"
+    ],
+    "version": "1.0"
+  },
+  {
+    "name": "auto-signature-outlook-addin",
+    "path": "outlook-addin/SKILL.md",
+    "description": "Add-in implementation — manifest, commands.js, Cloudflare Pages hosting, M365 deployment, debugging",
+    "triggers": [
+      "manifest", "commands.js", "Office.js", "Cloudflare Pages", "M365 deployment",
+      "resid", "LaunchEvent", "OnNewMessageCompose", "setSignatureAsync", "sideload"
+    ],
+    "references": [
+      "outlook-addin/references/commands-annotated.md",
+      "outlook-addin/references/manifest-annotated.md",
+      "outlook-addin/references/troubleshooting.md"
+    ],
+    "version": "1.0"
+  }
+]
