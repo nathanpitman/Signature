@@ -1,4 +1,4 @@
-# Outlook Auto Signature Add-in
+# Outlook Auto Signature Add-in POC
 
 An event-based Office.js add-in that automatically injects a remotely-managed HTML signature whenever a user opens a new compose window in Outlook. No task pane, no user interaction — it just works silently in the background.
 
