@@ -132,9 +132,7 @@ This is a proof of concept. The sideloaded manifest approach works for developme
 
 ## About
 
-I built this as a free, hackable starting point for anyone who wants a single global signature without standing up any infrastructure — fork it, point it at your own Cloudflare Pages project, and it's yours.
-
-If you outgrow the single-signature version — per-person details, a dashboard instead of hand-editing HTML, no manifest wrangling — that's the problem I work on full-time at [SigHQ](https://sighq.app).
+This is the DIY end of the spectrum: one global signature, no moving parts, fork it and it's yours. If you're weighing that against a commercial signature management platform instead — per-user signatures, an admin dashboard, centralised deployment — [SigHQ](https://sighq.app) is a good place to see what that space looks like.
 
 -----
 
