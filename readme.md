@@ -130,6 +130,12 @@ This is a proof of concept. The sideloaded manifest approach works for developme
 
 -----
 
+## About
+
+This is the DIY end of the spectrum: one global signature, no moving parts, fork it and it's yours. If you're weighing that against a commercial signature management platform instead — per-user signatures, an admin dashboard, centralised deployment — [SigHQ](https://sighq.app) is a good place to see what that space looks like.
+
+-----
+
 ## License
 
 MIT
